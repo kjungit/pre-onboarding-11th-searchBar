@@ -16,6 +16,5 @@
     "noEmit": true, // 컴파일러가 js 등 출력 파일을 만들어 내지 않도록 설정
     "jsx": "react-jsx" // tsx 파일을 jsx 로 컴파일하는 방식 지정
   },
-  "include": ["src", "tailwind.config.js", ".eslintrc.cjs"],
-  "references": [{ "path": "./tsconfig.node.json" }]
+  "include": ["src"]
 }
