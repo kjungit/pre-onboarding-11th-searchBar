@@ -1,20 +1,26 @@
+## 🖥 원티드 프리온보딩 프론트엔드 인턴십 4주차 과제
+- 검색창 구현 + 검색어 추천 기능 구현 + 캐싱 기능 구현
+- https://clinicaltrialskorea.com/ 검색 영역 클론
+
 ## ⚙️ 실행 방법
 ```
 $ git clone https://github.com/kjungit/pre-onboarding-11th-searchBar.git
 $ yarn install
 $ yarn start
 ```
+
 #### 서버 실행
 - https://github.com/walking-sunset/assignment-api
 ```
+$ git clone https://github.com/walking-sunset/assignment-api.git
 $ npm install
 $ npm start
 ```
 
+</br>
 
 ## 🔥 과제 목표
-- 검색창 구현 + 검색어 추천 기능 구현 + 캐싱 기능 구현
-- https://clinicaltrialskorea.com/ 검색 영역 클론
+
 - [x] 질환명 검색시 API 호출 후 검색어 추천 기능 구현
    - [x] 검색어가 없을 시 "검색어 없음" 표출
 - [x] API 호출별로 로컬 캐싱 구현
