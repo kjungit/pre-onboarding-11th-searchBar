@@ -4,6 +4,13 @@ $ git clone https://github.com/kjungit/pre-onboarding-11th-searchBar.git
 $ yarn install
 $ yarn start
 ```
+#### 서버 실행
+- https://github.com/walking-sunset/assignment-api
+```
+$ npm install
+$ npm start
+```
+
 
 ## 🔥 과제 목표
 - 검색창 구현 + 검색어 추천 기능 구현 + 캐싱 기능 구현
