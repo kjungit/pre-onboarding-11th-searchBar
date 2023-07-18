@@ -1,24 +1,23 @@
 import { ISearchData } from "../reducers/searchReducer";
 
 interface ISearchItemProps {
-  handleBlur: React.MouseEventHandler<HTMLAnchorElement>;
   item: ISearchData;
+  i: number;
 }
 
-const LINK_URL = "https://clinicaltrialskorea.com";
-
-function SearchItem({ handleBlur, item }: ISearchItemProps) {
+function SearchItem({ item, i }: ISearchItemProps) {
   return (
-    <a
-      onClick={handleBlur}
-      key={item.sickNm}
-      target="_blank"
-      href={`${LINK_URL}/studies?conditions=${item.sickNm}`}
+    <li
+      tabIndex={i}
+      className={`h-[40px] flex items-center hover:bg-gray-100 px-8 mb-1`}
     >
-      <li className={`h-[40px] flex items-center hover:bg-gray-100 px-8`}>
-        {item.sickNm}
-      </li>
-    </a>
+      <img
+        src="/searchIcon.svg"
+        alt="Search Icon"
+        className="w-[20px] h-[20px]"
+      />
+      <span className="ml-2 text-xl">{item.sickNm}</span>
+    </li>
   );
 }
 
