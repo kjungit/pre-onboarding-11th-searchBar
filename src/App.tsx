@@ -73,7 +73,7 @@ function App() {
   };
 
   if (state.error) return <>문제가 발생하였습니다.</>;
-  const lastArr = state.data?.slice(0, 7);
+  const lastArr = searchInput.length === 0 ? [] : state.data?.slice(0, 7);
   return (
     <main onClick={handleBlur}>
       <section className="flex flex-col items-center pt-[200px] w-full h-[100vh] p-10 bg-[#CAE9FF]">
@@ -82,6 +82,7 @@ function App() {
         </h3>
         <div className="relative mt-8 " ref={containerRef}>
           <input
+            tabIndex={1}
             type="text"
             placeholder="질환명을 입력해 주세요"
             onChange={onChangehandler}
@@ -89,36 +90,36 @@ function App() {
             ref={searchInputRef}
             className={` ${
               isFocused ? " border-blue-600" : "border-white"
-            } focus:outline-none border-4 py-4 pl-8 rounded-full items-center w-[500px] h-[70px] bg-white`}
+            } focus:outline-none border-4 py-4 pl-8 rounded-full items-center w-[500px] h-[70px] bg-white text-lg`}
           />
-          <svg
-            className="absolute top-6 right-8"
-            viewBox="0 0 16 16"
-            fill="currentColor"
-            preserveAspectRatio="none"
-            xmlns="http://www.w3.org/2000/svg"
-            width={20}
-          >
-            <path d="M6.56 0a6.56 6.56 0 015.255 10.49L16 14.674 14.675 16l-4.186-4.184A6.56 6.56 0 116.561 0zm0 1.875a4.686 4.686 0 100 9.372 4.686 4.686 0 000-9.372z"></path>
-          </svg>
+          <img
+            src="/searchIcon.svg"
+            alt="Search Icon"
+            className="w-[20px] h-[20px] absolute top-6 right-8"
+          />
           {isFocused && (
             <div className="absolute w-[500px] shadow-lg  py-8 rounded-3xl mt-6 h-[500px] bg-white left-1/2 transform -translate-x-1/2">
-              <p className="px-8 text-gray-500">
-                {state.loading ? "검색중..." : "최근 검색어"}{" "}
+              <div className="flex items-center pl-8 text-xl font-bold">
+                <div>
+                  <img
+                    src="/searchIcon.svg"
+                    alt="Search Icon"
+                    className="w-[20px] h-[20px]"
+                  />
+                </div>
+                <span className="pl-2">{searchInput}</span>
+              </div>
+              <p className="px-8 py-4 text-gray-500">
+                {state.loading ? "검색중..." : "추천 검색어"}{" "}
               </p>
               <ul>
                 {lastArr?.length !== 0 ? (
-                  lastArr?.map((item) => (
-                    <SearchItem
-                      key={item.sickCd}
-                      handleBlur={handleBlur}
-                      item={item}
-                    />
+                  lastArr?.map((item, index) => (
+                    <SearchItem i={index + 2} key={item.sickCd} item={item} />
                   ))
                 ) : (
-                  <div className="px-8">
+                  <div className="px-8 text-lg">
                     <p>검색어가 없습니다.</p>
-                    <p>질환명을 검색해주세요.</p>
                   </div>
                 )}
               </ul>
