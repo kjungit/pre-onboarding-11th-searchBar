@@ -2,12 +2,17 @@
 - 검색창 구현 + 검색어 추천 기능 구현 + 캐싱 기능 구현
 - https://clinicaltrialskorea.com/ 검색 영역 클론
 
+---
+
 ## ⚙️ 실행 방법
 ```
 $ git clone https://github.com/kjungit/pre-onboarding-11th-searchBar.git
 $ yarn install
 $ yarn start
 ```
+
+---
+
 
 #### 서버 실행
 - https://github.com/walking-sunset/assignment-api
@@ -18,6 +23,24 @@ $ npm start
 ```
 
 </br>
+
+[배포사이트](https://pre-onboarding-11th-search-bar.vercel.app/)
+
+
+
+---
+
+
+## 개발 조건 및 환경
+- 언어 : `React` `TypeScript`
+- style: `tailwind`
+- HTTP Client: `axios`
+- 배포 : `vercel`
+
+</br>
+
+---
+
 
 ## 🔥 과제 목표
 
