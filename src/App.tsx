@@ -3,6 +3,8 @@ import { isConsonant, isVowel } from "./utils/wordCheck";
 import { searchReducer } from "./reducers/searchReducer";
 import { CacheApiServer } from "./utils/cacheStorage";
 import SearchItem from "./components/searchItem";
+import { BiSearch } from "react-icons/bi";
+import { AiFillCloseCircle } from "react-icons/ai";
 
 function App() {
   const [isFocused, setIsFocused] = useState(false);
@@ -72,33 +74,73 @@ function App() {
     }
   };
 
-  if (state.error) return <>문제가 발생하였습니다.</>;
+  const deleteInput = () => {
+    setSearchInput("");
+  };
+
+  const [curLength, setCurLength] = useState<number>(-1);
   const lastArr = searchInput.length === 0 ? [] : state.data?.slice(0, 7);
+
+  const arrLength = lastArr?.length && lastArr.length;
+  const changeSearch = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (arrLength === undefined || lastArr === undefined) return;
+    if ((e.key === "ArrowDown" || e.key === "Tab") && searchInput.length) {
+      e.preventDefault();
+      console.log();
+      arrLength > 0 && arrLength < 7
+        ? setCurLength((prev) => (prev + 1) % arrLength)
+        : setCurLength((prev) => (prev + 1) % 7);
+    }
+    if (e.key === "ArrowUp") {
+      arrLength > 0 && arrLength < 7
+        ? setCurLength((prev) => (prev - 1 + arrLength) % arrLength)
+        : setCurLength((prev) => (prev - 1 + 7) % 7);
+    }
+
+    if (e.key === "Enter") {
+      const selectedItem = lastArr[curLength];
+      setSearchInput(selectedItem.sickNm);
+    }
+  };
+
+  if (state.error) return <>문제가 발생하였습니다.</>;
   return (
     <main onClick={handleBlur}>
-      <section className="flex flex-col items-center pt-[200px] w-full h-[100vh] p-10 bg-[#CAE9FF]">
+      <section className="flex flex-col items-center pt-[200px] w-full h-[100vh] p-10 bg-[#CAE9FF] ">
         <h3 className="text-4xl font-bold text-black">
           국내 모든 임상시험 검색하고 온라인으로 참여하기
         </h3>
-        <div className="relative mt-8 " ref={containerRef}>
+        <div
+          className={`${
+            isFocused && "border-blue-600 border-4"
+          } mt-8 border-white border-4 px-4 bg-white justify-between rounded-full relative flex items-center w-[640px] h-[90px]`}
+          ref={containerRef}
+        >
           <input
             tabIndex={1}
             type="text"
-            placeholder="질환명을 입력해 주세요"
             onChange={onChangehandler}
             onFocus={handleFocus}
             ref={searchInputRef}
-            className={` ${
-              isFocused ? " border-blue-600" : "border-white"
-            } focus:outline-none border-4 py-4 pl-8 rounded-full items-center w-[500px] h-[70px] bg-white text-lg`}
-          />
-          <img
-            src="/searchIcon.svg"
-            alt="Search Icon"
-            className="w-[20px] h-[20px] absolute top-6 right-8"
+            value={searchInput}
+            onKeyDown={changeSearch}
+            placeholder="질환명을 입력해 주세요."
+            className={`rounded-full pl-4 outline-none w-[500px] border-white text-lg`}
           />
           {isFocused && (
-            <div className="absolute w-[500px] shadow-lg  py-8 rounded-3xl mt-6 h-[500px] bg-white left-1/2 transform -translate-x-1/2">
+            <AiFillCloseCircle
+              onClick={deleteInput}
+              className="text-3xl text-gray-400 cursor-pointer"
+            />
+          )}
+          <button
+            type="button"
+            className="rounded-full  ml-4 w-[60px] h-[60px] bg-[#007BE9]  flex items-center justify-center"
+          >
+            <BiSearch className="w-[30px] h-[30px]  text-white" />
+          </button>
+          {isFocused && (
+            <div className="absolute w-[640px] top-20  shadow-lg  py-8 rounded-3xl mt-6 h-[500px] bg-white left-1/2 transform -translate-x-1/2">
               <div className="flex items-center pl-8 text-xl font-bold">
                 <div>
                   <img
@@ -110,12 +152,18 @@ function App() {
                 <span className="pl-2">{searchInput}</span>
               </div>
               <p className="px-8 py-4 text-gray-500">
-                {state.loading ? "검색중..." : "추천 검색어"}{" "}
+                {state.loading ? "검색중..." : "추천 검색어"}
               </p>
               <ul>
                 {lastArr?.length !== 0 ? (
                   lastArr?.map((item, index) => (
-                    <SearchItem i={index + 2} key={item.sickCd} item={item} />
+                    <SearchItem
+                      key={item.sickCd}
+                      item={item}
+                      searchInput={searchInput}
+                      index={index}
+                      curLength={curLength}
+                    />
                   ))
                 ) : (
                   <div className="px-8 text-lg">
