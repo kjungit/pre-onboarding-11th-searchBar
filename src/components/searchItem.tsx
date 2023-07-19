@@ -1,22 +1,43 @@
 import { ISearchData } from "../reducers/searchReducer";
+import { BiSearch } from "react-icons/bi";
 
 interface ISearchItemProps {
   item: ISearchData;
-  i: number;
+  searchInput: string;
+  index: number;
+  curLength: number;
 }
 
-function SearchItem({ item, i }: ISearchItemProps) {
+export function SearchItem({
+  item,
+  searchInput,
+  index,
+  curLength,
+}: ISearchItemProps) {
+  const highlightSearchInput = (text: string, searchInput: string) => {
+    const parts = text.split("");
+    return parts.map((part, index) => {
+      if (searchInput.includes(part)) {
+        return (
+          <span key={index} className="font-bold">
+            {part}
+          </span>
+        );
+      } else {
+        return <span key={index}>{part}</span>;
+      }
+    });
+  };
+  const res = highlightSearchInput(item.sickNm, searchInput);
   return (
     <li
-      tabIndex={i}
-      className={`h-[40px] flex items-center hover:bg-gray-100 px-8 mb-1`}
+      tabIndex={index + 1}
+      className={`${
+        index === curLength && "bg-gray-100"
+      } h-[40px] focus:outline-none focus:bg-gray-100 flex items-center hover:bg-gray-100 px-8 mb-1`}
     >
-      <img
-        src="/searchIcon.svg"
-        alt="Search Icon"
-        className="w-[20px] h-[20px]"
-      />
-      <span className="ml-2 text-xl">{item.sickNm}</span>
+      <BiSearch className="w-[30px] h-[30px]  text-white" />
+      <span className="ml-2 text-xl">{res}</span>
     </li>
   );
 }
