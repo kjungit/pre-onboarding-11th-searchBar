@@ -9,6 +9,7 @@ import { AiFillCloseCircle } from "react-icons/ai";
 function App() {
   const [isFocused, setIsFocused] = useState(false);
   const [searchInput, setSearchInput] = useState("");
+  const [curLength, setCurLength] = useState<number>(-1);
   const [state, dispatch] = useReducer(searchReducer, {
     loading: false,
     data: null,
@@ -78,7 +79,6 @@ function App() {
     setSearchInput("");
   };
 
-  const [curLength, setCurLength] = useState<number>(-1);
   const lastArr = searchInput.length === 0 ? [] : state.data?.slice(0, 7);
 
   const arrLength = lastArr?.length && lastArr.length;
