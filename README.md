@@ -40,7 +40,13 @@ $ npm start
 </br>
 
 ---
+|**검색**|**Cache**|
+|---|---|
+|![searchBar](https://github.com/kjungit/pre-onboarding-11th-searchBar/assets/100064540/e65ab62b-1416-489a-af4f-824b191dc4ed)|![cache](https://github.com/kjungit/pre-onboarding-11th-searchBar/assets/100064540/89e0e8db-074e-4e46-a40f-6720e1874995)|
+|검색어 검색 시 추천 검색어가 나오고,</br> 키보드 방향키, Tap키를 통해 이동 가능|같은 검색어 요청시 캐시스토리지에 캐싱, 네트워크 재요청 보내지 않도록 구현|
 
+
+</br>
 
 ## 🔥 과제 목표
 
@@ -172,4 +178,27 @@ export function isVowel(character: string) {
 </br>
 
 ### 📌 키보드로 검색어 이동
-- tabIndex를 사용하여 input창 다음으로 추천검색어에 순서대로 지정되도록 구현
+```ts
+  const changeSearch = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (arrLength === undefined || lastArr === undefined) return;
+    if ((e.key === "ArrowDown" || e.key === "Tab") && searchInput.length) {
+      e.preventDefault();
+      console.log();
+      arrLength > 0 && arrLength < 7
+        ? setCurLength((prev) => (prev + 1) % arrLength)
+        : setCurLength((prev) => (prev + 1) % 7);
+    }
+    if (e.key === "ArrowUp") {
+      arrLength > 0 && arrLength < 7
+        ? setCurLength((prev) => (prev - 1 + arrLength) % arrLength)
+        : setCurLength((prev) => (prev - 1 + 7) % 7);
+    }
+
+    if (e.key === "Enter") {
+      const selectedItem = lastArr[curLength];
+      setSearchInput(selectedItem.sickNm);
+    }
+  };
+```
+- ArrowDown, ArrowUp key에 따라서 현재 배열의 요소들의 index에 따라서 표시되도록 구현
+- 특정 검색어를 선택시 input값에 반영되도록 구현
