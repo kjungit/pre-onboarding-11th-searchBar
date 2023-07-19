@@ -143,11 +143,7 @@ function App() {
             <div className="absolute w-[640px] top-20  shadow-lg  py-8 rounded-3xl mt-6 h-[500px] bg-white left-1/2 transform -translate-x-1/2">
               <div className="flex items-center pl-8 text-xl font-bold">
                 <div>
-                  <img
-                    src="/searchIcon.svg"
-                    alt="Search Icon"
-                    className="w-[20px] h-[20px]"
-                  />
+                  <BiSearch className="w-[30px] h-[30px]  text-gray-500" />
                 </div>
                 <span className="pl-2">{searchInput}</span>
               </div>
